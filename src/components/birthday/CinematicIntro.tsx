@@ -175,16 +175,16 @@ export const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
   if (scene === "done") return null;
 
   const storyLineStyles = [
-    { className: "text-lg md:text-2xl lg:text-3xl italic font-light", style: { color: "hsl(280, 10%, 70%)" } as React.CSSProperties },
-    { className: "text-xl md:text-3xl lg:text-4xl font-normal", style: { color: "hsl(330, 70%, 70%)" } as React.CSSProperties },
-    { className: "text-xl md:text-3xl lg:text-[2.5rem] font-semibold", style: { color: "hsl(45, 100%, 70%)" } as React.CSSProperties },
-    { className: "text-lg md:text-2xl lg:text-3xl font-light", style: { color: "hsl(200, 80%, 70%)" } as React.CSSProperties },
+    { className: "text-lg md:text-2xl lg:text-3xl italic font-light", style: { color: "hsl(280, 20%, 85%)", textShadow: "0 2px 10px rgba(0,0,0,0.3)" } as React.CSSProperties },
+    { className: "text-xl md:text-3xl lg:text-4xl font-normal", style: { color: "hsl(330, 80%, 85%)", textShadow: "0 2px 15px rgba(0,0,0,0.4)" } as React.CSSProperties },
+    { className: "text-xl md:text-3xl lg:text-[2.5rem] font-semibold", style: { color: "hsl(45, 100%, 80%)", textShadow: "0 2px 20px rgba(0,0,0,0.5)" } as React.CSSProperties },
+    { className: "text-lg md:text-2xl lg:text-3xl font-light", style: { color: "hsl(200, 90%, 85%)", textShadow: "0 2px 10px rgba(0,0,0,0.3)" } as React.CSSProperties },
   ];
 
   const postChatStyles = [
-    { className: "text-2xl md:text-4xl lg:text-5xl font-bold", style: { color: "hsl(330, 85%, 65%)" } as React.CSSProperties },
-    { className: "text-2xl md:text-4xl lg:text-5xl font-extrabold", style: { color: "hsl(45, 100%, 65%)" } as React.CSSProperties },
-    { className: "text-3xl md:text-5xl lg:text-6xl font-black bg-gradient-to-r from-[hsl(330,85%,60%)] via-[hsl(45,100%,65%)] to-[hsl(270,60%,60%)] bg-clip-text text-transparent animate-gradient-shift", style: {} as React.CSSProperties },
+    { className: "text-2xl md:text-4xl lg:text-5xl font-bold", style: { color: "hsl(330, 95%, 75%)", textShadow: "0 4px 20px rgba(0,0,0,0.5)" } as React.CSSProperties },
+    { className: "text-2xl md:text-4xl lg:text-5xl font-extrabold", style: { color: "hsl(45, 100%, 75%)", textShadow: "0 4px 25px rgba(0,0,0,0.5)" } as React.CSSProperties },
+    { className: "text-3xl md:text-5xl lg:text-6xl font-black bg-gradient-to-r from-[hsl(330,90%,70%)] via-[hsl(45,100%,75%)] to-[hsl(270,70%,70%)] bg-clip-text text-transparent animate-gradient-shift", style: { filter: "drop-shadow(0 4px 15px rgba(0,0,0,0.3))" } as React.CSSProperties },
   ];
 
   const finalLineAnimations: Array<"zoom-in" | "pop-out" | "stagger-up" | "float" | "wave" | "typewriter-burst"> = [
@@ -197,12 +197,12 @@ export const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
       style={{
         background: getBackground() !== "none"
           ? `${getBackground()} center/cover no-repeat`
-          : "linear-gradient(135deg, hsl(280, 60%, 8%) 0%, hsl(300, 40%, 15%) 25%, hsl(330, 50%, 12%) 50%, hsl(270, 50%, 10%) 75%, hsl(280, 60%, 8%) 100%)",
+          : "linear-gradient(135deg, hsl(280, 60%, 12%) 0%, hsl(300, 45%, 18%) 25%, hsl(330, 55%, 15%) 50%, hsl(270, 55%, 12%) 75%, hsl(280, 60%, 12%) 100%)",
       }}
     >
       {/* Dark overlay for readability when bg image is active */}
       {getBackground() !== "none" && (
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-[3px]" />
       )}
       {/* White flash overlay */}
       {flashWhite && (
