@@ -7,11 +7,10 @@ export const config = {
     birthdayName: "AKASH",
 
     // Method 2: Fallback Photos (Only used if assets/photoX.jpg are missing)
-    photos: [
-       photos: [
-    "funny1.jpg",
-    "funny2.jpg",
-    "funny3.jpg"
+   photos: [
+        "/funny1.jpg",
+        "/funny2.jpg",
+        "/funny3.jpg"
 ]
     ]
 };
