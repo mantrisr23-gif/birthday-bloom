@@ -13,7 +13,6 @@ interface KineticTextProps {
 
 export const KineticText = ({ text, animation, className = "", style, delay = 0, onComplete }: KineticTextProps) => {
   const [started, setStarted] = useState(false);
-  const [done, setDone] = useState(false);
 
   useEffect(() => {
     if (started) return;
@@ -23,8 +22,9 @@ export const KineticText = ({ text, animation, className = "", style, delay = 0,
 
   useEffect(() => {
     if (!started) return;
-    const dur = text.length * 80 + 800;
-    const t = setTimeout(() => { setDone(true); onComplete?.(); }, dur);
+    // RECTIFIED: Snappier duration for a faster "roast" feel
+    const dur = text.length * 60 + 600; 
+    const t = setTimeout(() => { onComplete?.(); }, dur);
     return () => clearTimeout(t);
   }, [started, text, onComplete]);
 
@@ -33,37 +33,38 @@ export const KineticText = ({ text, animation, className = "", style, delay = 0,
   if (!started) return <span className={className} style={{ ...style, opacity: 0 }}>{text}</span>;
 
   const getCharStyle = (i: number): React.CSSProperties => {
-    const charDelay = `${i * 60}ms`;
+    // RECTIFIED: Reduced charDelay to make the word form faster
+    const charDelay = `${i * 45}ms`; 
     switch (animation) {
       case "zoom-in":
         return {
           display: "inline-block",
-          animation: `kinetic-zoom 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) ${charDelay} both`,
+          animation: `kinetic-zoom 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${charDelay} both`,
         };
       case "pop-out":
         return {
           display: "inline-block",
-          animation: `kinetic-pop 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) ${charDelay} both`,
+          animation: `kinetic-pop 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55) ${charDelay} both`,
         };
       case "stagger-up":
         return {
           display: "inline-block",
-          animation: `kinetic-stagger-up 0.7s ease-out ${charDelay} both`,
+          animation: `kinetic-stagger-up 0.6s ease-out ${charDelay} both`,
         };
       case "float":
         return {
           display: "inline-block",
-          animation: `kinetic-float 0.8s ease-out ${charDelay} both, kinetic-float-idle 3s ease-in-out ${parseFloat(charDelay) / 1000 + 0.8}s infinite alternate`,
+          animation: `kinetic-float 0.7s ease-out ${charDelay} both, kinetic-float-idle 3s ease-in-out ${parseFloat(charDelay) / 1000 + 0.7}s infinite alternate`,
         };
       case "wave":
         return {
           display: "inline-block",
-          animation: `kinetic-wave 0.6s ease-out ${charDelay} both`,
+          animation: `kinetic-wave 0.5s ease-out ${charDelay} both`,
         };
       case "typewriter-burst":
         return {
           display: "inline-block",
-          animation: `kinetic-burst 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${charDelay} both`,
+          animation: `kinetic-burst 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) ${charDelay} both`,
         };
       default:
         return { display: "inline-block" };
