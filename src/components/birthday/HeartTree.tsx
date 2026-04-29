@@ -28,8 +28,9 @@ const TreeSparks = ({ count }: { count: number }) => {
                         height: s.size,
                         left: `${s.left}%`,
                         bottom: `${s.bottom}%`,
-                        background: "hsl(330, 90%, 75%)",
-                        boxShadow: "0 0 10px hsl(330, 90%, 75%), 0 0 20px hsl(330, 90%, 75%, 0.5)",
+                        // RECTIFIED: Removed the pink/soft colors, replaced with Blue/Teal
+                        background: "hsl(210, 90%, 75%)",
+                        boxShadow: "0 0 10px hsl(210, 90%, 75%), 0 0 20px hsl(210, 90%, 75%, 0.5)",
                         animation: `float-up ${s.duration}s ease-in-out ${s.delay}s infinite alternate`,
                         opacity: 0.7,
                     } as CSSProperties}
@@ -43,7 +44,7 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
     const [stage, setStage] = useState<0 | 1 | 2 | 3 | 4>(0);
 
     useEffect(() => {
-        // 0: Trunk, 1: Main branches, 2: Small branches, 3: Leaves (hearts), 4: Glow/Bloom
+        // 0: Trunk, 1: Main branches, 2: Small branches, 3: Leaves (coins/folders), 4: Glow/Bloom
         const t1 = setTimeout(() => setStage(1), delay);
         const t2 = setTimeout(() => setStage(2), delay + 1500);
         const t3 = setTimeout(() => setStage(3), delay + 3000);
@@ -57,7 +58,7 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
         };
     }, [delay]);
 
-    // Tree Path Definitions
+    // Tree Path Definitions (Kept the same cool tree structure)
     const trunkPath = "M 150 300 Q 145 200 150 150 Q 155 200 150 300 Z";
 
     const branchesStage1 = [
@@ -75,7 +76,7 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
         { path: "M 150 80 Q 180 50 190 30", length: 90 }, // Off center right
     ];
 
-    const heartLeaves = [
+    const leafPositions = [
         // Center mass
         { cx: 150, cy: 50, scale: 1.2, delay: 0 },
         { cx: 130, cy: 30, scale: 0.9, delay: 0.2 },
@@ -103,7 +104,9 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
         { cx: 210, cy: 40, scale: 0.6, delay: 0.6 },
     ];
 
-    const heartPath = "M0,-5 Q-5,-10 -10,-5 Q-15,0 -5,10 L0,15 L5,10 Q15,0 10,-5 Q5,-10 0,-5 Z";
+    // RECTIFIED: Definitions for the new non-romantic leaf shapes
+    const coinPath = "M0,-10 A10,10 0 1,1 0,10 A10,10 0 1,1 0,-10 Z"; // Simple circle for coin
+    const ruppeSymbolPath = "M0,-10 A10,10 0 1,1 0,10 A10,10 0 1,1 0,-10 Z"; // Simpler coin shape for easier formatting
 
     return (
         <div className="relative w-full max-w-[400px] aspect-[3/4] mx-auto overflow-hidden">
@@ -111,7 +114,8 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
             <div
                 className={`absolute inset-0 transition-opacity duration-2000 pointer-events-none rounded-full blur-[80px]`}
                 style={{
-                    background: "radial-gradient(circle at 50% 40%, hsl(330, 85%, 60%, 0.25), transparent 60%)",
+                    // RECTIFIED: Replaced pink glow (#330) with Blue glow (#210)
+                    background: "radial-gradient(circle at 50% 40%, hsl(210, 85%, 60%, 0.25), transparent 60%)",
                     opacity: stage === 4 ? 1 : 0
                 }}
             />
@@ -140,7 +144,8 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                     cy="285"
                     rx="60"
                     ry="8"
-                    fill="hsl(330, 60%, 50%)"
+                    // RECTIFIED: Blue reflection
+                    fill="hsl(210, 60%, 50%)"
                     opacity={stage === 4 ? 0.3 : 0}
                     className="transition-opacity duration-2000"
                     filter="url(#glow)"
@@ -193,8 +198,8 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                     />
                 ))}
 
-                {/* Stage 3 & 4 Leaves (Hearts) */}
-                {heartLeaves.map((leaf, i) => (
+                {/* RECTIFIED: New Leaf Sequence (Coins and Files) */}
+                {leafPositions.map((leaf, i) => (
                     <g
                         key={`leaf-${i}`}
                         style={{
@@ -203,15 +208,18 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                             transformOrigin: "center"
                         }}
                     >
-                        <path
-                            d={heartPath}
-                            fill={i % 3 === 0 ? "hsl(330, 85%, 65%)" : i % 3 === 1 ? "hsl(340, 75%, 70%)" : "hsl(320, 90%, 60%)"}
-                            filter={stage === 4 ? "url(#glow)" : ""}
-                            className={stage === 4 ? "transition-all duration-1000" : ""}
-                            style={{
-                                animation: stage === 4 ? `pulse-scale 3s ease-in-out ${leaf.delay}s infinite alternate` : "none"
-                            }}
-                        />
+                        {i % 2 === 0 ? (
+                            // Even indices are Gold Rupee Coins (₹)
+                            <g>
+                                <circle cx="0" cy="0" r="10" fill="hsl(45, 100%, 55%)" filter={stage === 4 ? "url(#glow)" : ""} />
+                                <text x="0" y="4" fontSize="12" fontWeight="bold" fill="hsl(20, 50%, 20%)" textAnchor="middle">₹</text>
+                            </g>
+                        ) : (
+                            // Odd indices are Blue Office Folders (📂)
+                            <g transform="translate(-10, -8)">
+                                <path d="M2,4 L8,4 L10,6 L18,6 L18,16 L2,16 Z" fill="hsl(210, 85%, 60%)" filter={stage === 4 ? "url(#glow)" : ""} />
+                            </g>
+                        )}
                     </g>
                 ))}
             </svg>
