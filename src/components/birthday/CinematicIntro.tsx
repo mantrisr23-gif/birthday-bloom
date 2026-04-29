@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { BIRTHDAY_NAME } from "@/config/birthday";
 import { useConfetti } from "./Confetti";
 import { Balloons } from "./Balloons";
 import { Sparkles } from "./Sparkles";
@@ -55,7 +54,7 @@ export const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
   }, []);
 
   const spawnEmojiBurst = useCallback(() => {
-    const burstEmojis = ["🎉", "🎊", "✨", "💫", "⭐", "🌟", "💖", "🎈", "🥳", "🎁"];
+    const burstEmojis = ["🎉", "😂", "✨", "☕", "⭐", "🌟", "🔥", "🎈", "🥳", "💤"];
     const bursts = Array.from({ length: 12 }, (_, i) => ({
       id: Date.now() + i,
       emoji: burstEmojis[Math.floor(Math.random() * burstEmojis.length)],
@@ -76,38 +75,38 @@ export const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
     setTimeout(() => setFlashWhite(false), 300);
   }, []);
 
+  // AKASH ROAST LINES
   const storyLines = [
-    "There's someone I've been thinking about...",
-    "Someone who makes ordinary moments feel extraordinary...",
-    "Someone whose smile lights up the darkest days...",
-    "I could have sent a simple message, a few words...",
+    "There's a certain junior named Akash we need to talk about...",
+    "Someone who makes simple tasks look incredibly difficult...",
+    "Someone who specializes in 15-minute tea breaks...",
+    "We could have just bought you a simple samosa, Akash...",
   ];
 
   const postChatLines = [
-    "But you are not just anyone to me...",
-    "You deserve something as special as you are...",
-    "So I stayed up, and I made this... just for you ❤️",
+    "But you aren't just any junior, Akash...",
+    "You are the legend who disappears at 5:01 PM sharp...",
+    "So we made this to officially roast you on your birthday 😂",
   ];
 
   const finalLines = [
-    `Dear ${BIRTHDAY_NAME}`,
-    "I hope you loved this...",
-    "I hope I made you smile...",
-    "And made our day special ✨",
-    "I wish you a long life filled with happiness...",
-    "And a beautiful future ahead 💖",
+    "Happy Birthday, Akash!",
+    "We wanted to get you a real gift...",
+    "But we figured another nap was more your style 😴",
+    "Thanks for keeping the ward entertaining...",
+    "May your shifts be short and your tea breaks be long.",
+    "Now don't get too shy... and get back to work! 🏃‍♂️💨",
   ];
 
   useEffect(() => () => clearTimers(), [clearTimers]);
 
-  // Phase 1: Storytelling with kinetic text
+  // Phase 1: Storytelling
   useEffect(() => {
     if (scene !== "storytelling") return;
     clearTimers();
     storyLines.forEach((_, i) => {
       addTimer(() => { setStoryLine(i); playType(); }, i * 5000);
     });
-    // Progress heart at line 2
     addTimer(() => setHeartStage(2), 5000);
     addTimer(() => { playWhoosh(); setScene("fake-chat"); }, storyLines.length * 5000);
   }, [scene]);
@@ -188,10 +187,6 @@ export const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
     { className: "text-3xl md:text-5xl lg:text-6xl font-black bg-gradient-to-r from-[hsl(330,90%,70%)] via-[hsl(45,100%,75%)] to-[hsl(270,70%,70%)] bg-clip-text text-transparent animate-gradient-shift", style: { filter: "drop-shadow(0 4px 15px rgba(0,0,0,0.3))" } as React.CSSProperties },
   ];
 
-  const finalLineAnimations: Array<"zoom-in" | "pop-out" | "stagger-up" | "float" | "wave" | "typewriter-burst"> = [
-    "pop-out", "stagger-up", "float", "wave", "stagger-up", "zoom-in",
-  ];
-
   return (
     <div
       className={`fixed inset-0 z-40 flex items-center justify-center transition-all duration-1000 animate-bg-shift ${fadeOut ? "opacity-0" : "opacity-100"} ${shaking ? "animate-screen-shake" : ""}`}
@@ -201,32 +196,10 @@ export const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
           : "linear-gradient(135deg, hsl(280, 60%, 12%) 0%, hsl(300, 45%, 18%) 25%, hsl(330, 55%, 15%) 50%, hsl(270, 55%, 12%) 75%, hsl(280, 60%, 12%) 100%)",
       }}
     >
-      {/* Dark overlay for readability when bg image is active */}
-      {getBackground() !== "none" && (
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-[3px]" />
-      )}
-      {/* White flash overlay */}
-      {flashWhite && (
-        <div className="fixed inset-0 z-[60] bg-white/20 pointer-events-none animate-flash" />
-      )}
+      {getBackground() !== "none" && <div className="absolute inset-0 bg-black/60 backdrop-blur-[3px]" />}
+      {flashWhite && <div className="fixed inset-0 z-[60] bg-white/20 pointer-events-none animate-flash" />}
 
       <Sparkles count={15} />
-
-      {/* Heart indicator — top corner */}
-      {scene !== "fake-chat" && (
-        <div className="fixed top-6 right-6 z-50 w-12 h-10 md:w-16 md:h-14 transition-all duration-1000">
-          <HeartProgression stage={heartStage} />
-        </div>
-      )}
-
-      {/* Ring pulse */}
-      {ringPulse && (
-        <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-50">
-          <div className="w-32 h-32 rounded-full border-4 animate-ring-expand" style={{ borderColor: "hsl(330, 85%, 60%)" }} />
-          <div className="absolute w-32 h-32 rounded-full border-4 animate-ring-expand" style={{ borderColor: "hsl(45, 100%, 65%)", animationDelay: "0.2s" }} />
-          <div className="absolute w-32 h-32 rounded-full border-4 animate-ring-expand" style={{ borderColor: "hsl(200, 80%, 60%)", animationDelay: "0.4s" }} />
-        </div>
-      )}
 
       {/* Emoji bursts */}
       {emojiBursts.map((b) => (
@@ -235,7 +208,7 @@ export const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
         </div>
       ))}
 
-      {/* Storytelling with kinetic text */}
+      {/* Phase 1: Storytelling */}
       {scene === "storytelling" && (
         <div className="relative z-50 text-center max-w-3xl mx-auto px-6">
           <div className="text-3xl mb-8 animate-pulse opacity-60">💭</div>
@@ -245,118 +218,60 @@ export const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
               className={`font-display leading-relaxed mb-6 transition-all duration-1000 ${(storyLine >= i) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
               style={(storyLineStyles[i] || storyLineStyles[0]).style}
             >
-              {storyLine >= i && (
-                <TypeWriter
-                  text={line}
-                  speed={70}
-                  delay={i === storyLine ? 300 : 0}
-                  cursor={storyLine === i}
-                />
-              )}
+              {storyLine >= i && <TypeWriter text={line} speed={70} delay={i === storyLine ? 300 : 0} cursor={storyLine === i} />}
             </p>
           ))}
         </div>
       )}
 
-      {/* Fake Chat */}
+      {/* Phase 2: Chat */}
       {scene === "fake-chat" && <FakeChatScene onComplete={handleChatComplete} />}
 
-      {/* Post-chat */}
+      {/* Phase 3: Post-chat */}
       {scene === "post-chat" && (
         <div className="text-center max-w-3xl mx-auto px-6 animate-slide-up-fade">
-          {/* Heart stage 3 indicator */}
-          <div className="mb-8 flex justify-center">
-            <div className="w-20 h-18">
-              <HeartProgression stage={3} />
-            </div>
-          </div>
+          <div className="mb-8 flex justify-center text-4xl">🤣</div>
           {postChatLines.slice(0, postChatLine + 1).map((line, i) => {
             const s = postChatStyles[i] || postChatStyles[0];
             return (
               <p key={i} className={`font-display leading-relaxed mb-6 ${s.className}`} style={s.style}>
-                <KineticText
-                  text={line}
-                  animation={postChatAnimations[i] || "pop-out"}
-                  delay={i === postChatLine ? 300 : 0}
-                />
+                <KineticText text={line} animation={postChatAnimations[i] || "pop-out"} delay={i === postChatLine ? 300 : 0} />
               </p>
             );
           })}
         </div>
       )}
 
-      {/* Reveal Sequence */}
+      {/* Phase 4: Reveal */}
       {scene === "reveal-sequence" && (
         <>
           {revealStep === "dear-name" && (
             <div className="text-center animate-bounce-in">
-              <p className="text-2xl md:text-4xl text-muted-foreground mb-4 font-display italic">
-                <KineticText text="This is for you..." animation="float" />
-              </p>
-              <h2 className="font-display text-6xl md:text-8xl lg:text-9xl font-black text-foreground animate-glow-pulse">
-                <KineticText text={BIRTHDAY_NAME} animation="pop-out" delay={600} />
-              </h2>
-              <div className="text-3xl mt-6">✨💖✨</div>
+              <p className="text-2xl md:text-4xl text-muted-foreground mb-4 font-display italic">Brace yourself...</p>
+              <h2 className="font-display text-6xl md:text-8xl lg:text-9xl font-black text-foreground animate-glow-pulse">Akash</h2>
+              <div className="text-3xl mt-6">✨😂✨</div>
             </div>
           )}
 
           {revealStep === "grand-reveal" && (
             <div className="text-center animate-bounce-in">
               <Balloons count={20} />
-              {/* Full heart with pop reveal */}
-              <div className="flex justify-center mb-6">
-                <HeartProgression stage={4} />
-              </div>
               <div className="text-5xl md:text-7xl mb-4 animate-cake-glow">🎂</div>
               <h1 className="font-display text-5xl md:text-7xl lg:text-9xl font-black mb-4">
-                <span className="bg-gradient-to-r from-[hsl(330,85%,60%)] via-[hsl(45,100%,65%)] to-[hsl(200,80%,60%)] bg-clip-text text-transparent animate-gradient-shift">
-                  <TypeWriter text="Happy Birthday" speed={90} delay={200} cursor={false} />
-                </span>
+                <span className="bg-gradient-to-r from-[hsl(330,85%,60%)] via-[hsl(45,100%,65%)] to-[hsl(200,80%,60%)] bg-clip-text text-transparent animate-gradient-shift">Happy Birthday</span>
               </h1>
-              <h2 className="font-display text-6xl md:text-8xl lg:text-[10rem] font-black text-foreground animate-glow-pulse mt-4">
-                <TypeWriter text={`${BIRTHDAY_NAME}!`} speed={120} delay={1800} cursor={false} />
-              </h2>
-              <div className="text-4xl md:text-6xl mt-8 space-x-2">
-                {["🎈", "🎉", "🎊", "🎁", "🥳", "🎈"].map((e, i) => (
-                  <span key={i} className="inline-block" style={{ animation: `kinetic-pop 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) ${1200 + i * 150}ms both` }}>
-                    {e}
-                  </span>
-                ))}
-              </div>
+              <h2 className="font-display text-6xl md:text-8xl lg:text-[10rem] font-black text-foreground animate-glow-pulse mt-4">Akash!</h2>
             </div>
           )}
 
           {revealStep === "final-message" && (
             <div className="text-center max-w-3xl mx-auto px-6">
-              <div className="relative">
-                <div
-                  className="absolute inset-0 -z-10 rounded-full blur-3xl opacity-20 animate-pulse"
-                  style={{
-                    background: "radial-gradient(circle, hsl(330, 85%, 60%), hsl(270, 60%, 55%), transparent)",
-                    width: "120%", height: "120%", left: "-10%", top: "-10%",
-                  }}
-                />
-                {finalLines.slice(0, finalLineIndex + 1).map((line, i) => (
-                  <p
-                    key={i}
-                    className={`font-display leading-relaxed mb-5 ${i === 0
-                      ? "text-2xl md:text-4xl lg:text-5xl font-black bg-gradient-to-r from-[hsl(45,100%,65%)] to-[hsl(330,85%,65%)] bg-clip-text text-transparent"
-                      : "text-xl md:text-3xl lg:text-4xl text-foreground/90"
-                      }`}
-                    style={{ textShadow: i === 0 ? "none" : "0 0 40px hsl(330 85% 60% / 0.15)" }}
-                  >
-                    <TypeWriter
-                      text={line}
-                      speed={65}
-                      delay={i === finalLineIndex ? 400 : 0}
-                      cursor={finalLineIndex === i}
-                    />
-                  </p>
-                ))}
-              </div>
-              <div className="text-3xl mt-8 space-x-3 animate-pulse">
-                <span>💖</span><span>✨</span><span>🌟</span><span>✨</span><span>💖</span>
-              </div>
+              {finalLines.slice(0, finalLineIndex + 1).map((line, i) => (
+                <p key={i} className={`font-display leading-relaxed mb-5 ${i === 0 ? "text-2xl md:text-4xl lg:text-5xl font-black text-yellow-400" : "text-xl md:text-3xl lg:text-4xl text-white"}`}>
+                  <TypeWriter text={line} speed={65} delay={i === finalLineIndex ? 400 : 0} cursor={finalLineIndex === i} />
+                </p>
+              ))}
+              <div className="text-3xl mt-8 animate-pulse">🤣🎉☕🎉🤣</div>
             </div>
           )}
         </>
