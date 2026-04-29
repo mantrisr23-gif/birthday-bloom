@@ -16,8 +16,9 @@ export const FakeChatScene = ({ onComplete }: FakeChatSceneProps) => {
   const [retypeText, setRetypeText] = useState("");
   const { playType, playWhoosh, playReveal } = useSoundManager();
 
-  const fullText = "Happy Birthday";
-  const retypeFullText = "I could have sent this…";
+  // THE ROAST TEXTS
+  const fullText = "Happy Birthday, Akash!";
+  const retypeFullText = "But we know you'd ignore a simple message...";
 
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = [];
@@ -28,7 +29,7 @@ export const FakeChatScene = ({ onComplete }: FakeChatSceneProps) => {
       playWhoosh();
     }, 1000));
 
-    // Phase 2: Type "Happy Birthday" (1-3s)
+    // Phase 2: Type "Happy Birthday, Akash!" (1-3s)
     for (let i = 0; i < fullText.length; i++) {
       timers.push(setTimeout(() => {
         setTypedText(fullText.slice(0, i + 1));
@@ -72,7 +73,7 @@ export const FakeChatScene = ({ onComplete }: FakeChatSceneProps) => {
     // Phase 6: Pause after deletion
     timers.push(setTimeout(() => setPhase("deleted"), deleteEnd + 200));
 
-    // Phase 7: Retype emotional text
+    // Phase 7: Retype roast text
     timers.push(setTimeout(() => setPhase("retype"), deleteEnd + 1000));
     for (let i = 0; i < retypeFullText.length; i++) {
       timers.push(setTimeout(() => {
@@ -83,7 +84,7 @@ export const FakeChatScene = ({ onComplete }: FakeChatSceneProps) => {
 
     const retypeEnd = deleteEnd + 1000 + retypeFullText.length * 70;
 
-    // Phase 8: Show "but you deserve something more special"
+    // Phase 8: Show "so we built this to roast you"
     timers.push(setTimeout(() => {
       setPhase("message");
       playReveal();
@@ -108,13 +109,14 @@ export const FakeChatScene = ({ onComplete }: FakeChatSceneProps) => {
     <div className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-1000 ${fadeOut ? "opacity-0" : "opacity-100"}`}>
       <div className="relative w-[90vw] max-w-md animate-slide-up-fade" style={{ animationDuration: "0.6s" }}>
         {/* Phone frame */}
-        <div className="rounded-2xl overflow-hidden shadow-2xl border border-border/30" style={{ background: "hsl(280, 40%, 10%)" }}>
+        <div className="rounded-2xl overflow-hidden shadow-2xl border border-border/30" style={{ background: "hsl(220, 20%, 15%)" }}>
+          
           {/* Chat header */}
-          <div className="px-4 py-3 flex items-center gap-3 border-b border-border/20" style={{ background: "hsl(280, 40%, 12%)" }}>
-            <div className="w-9 h-9 rounded-full bg-primary/30 flex items-center justify-center text-sm">💖</div>
+          <div className="px-4 py-3 flex items-center gap-3 border-b border-border/20" style={{ background: "hsl(220, 20%, 10%)" }}>
+            <div className="w-9 h-9 rounded-full bg-primary/30 flex items-center justify-center text-xl">☕</div>
             <div>
-              <p className="text-foreground text-sm font-semibold">My Special Person</p>
-              <p className="text-xs" style={{ color: "hsl(120, 60%, 60%)" }}>online</p>
+              <p className="text-foreground text-sm font-semibold">Akash (The Ghost Junior)</p>
+              <p className="text-xs" style={{ color: "hsl(30, 90%, 60%)" }}>away (probably on break)</p>
             </div>
             <div className="ml-auto flex gap-2 text-muted-foreground/40">
               <span>📞</span><span>📹</span>
@@ -123,16 +125,16 @@ export const FakeChatScene = ({ onComplete }: FakeChatSceneProps) => {
 
           {/* Chat body */}
           <div className="px-4 py-6 min-h-[220px] flex flex-col justify-end gap-2">
-            <div className="self-start max-w-[70%] px-3 py-2 rounded-xl rounded-bl-sm text-sm text-foreground/80" style={{ background: "hsl(280, 30%, 18%)" }}>
-              Hey! 💕
+            <div className="self-start max-w-[70%] px-3 py-2 rounded-xl rounded-bl-sm text-sm text-foreground/80" style={{ background: "hsl(0, 50%, 30%)" }}>
+              Akash! 🚨
             </div>
-            <div className="self-start max-w-[70%] px-3 py-2 rounded-xl rounded-bl-sm text-sm text-foreground/80" style={{ background: "hsl(280, 30%, 18%)" }}>
-              I have something to tell you...
+            <div className="self-start max-w-[70%] px-3 py-2 rounded-xl rounded-bl-sm text-sm text-foreground/80" style={{ background: "hsl(0, 50%, 30%)" }}>
+              Where are you? The pending files are piling up!
             </div>
 
             {/* Typing indicator */}
             {isTypingPhase && typedText.length === 0 && (
-              <div className="self-end flex gap-1 px-4 py-3 rounded-xl rounded-br-sm" style={{ background: "hsl(330, 50%, 25%)" }}>
+              <div className="self-end flex gap-1 px-4 py-3 rounded-xl rounded-br-sm" style={{ background: "hsl(220, 30%, 25%)" }}>
                 <span className="w-2 h-2 rounded-full bg-foreground/50 animate-bounce" style={{ animationDelay: "0ms" }} />
                 <span className="w-2 h-2 rounded-full bg-foreground/50 animate-bounce" style={{ animationDelay: "150ms" }} />
                 <span className="w-2 h-2 rounded-full bg-foreground/50 animate-bounce" style={{ animationDelay: "300ms" }} />
@@ -141,10 +143,10 @@ export const FakeChatScene = ({ onComplete }: FakeChatSceneProps) => {
           </div>
 
           {/* Input bar */}
-          <div className="px-3 py-3 flex items-center gap-2 border-t border-border/20" style={{ background: "hsl(280, 40%, 9%)" }}>
-            <div className="flex-1 rounded-full px-4 py-2.5 text-sm text-foreground min-h-[40px] flex items-center" style={{ background: "hsl(280, 30%, 15%)" }}>
+          <div className="px-3 py-3 flex items-center gap-2 border-t border-border/20" style={{ background: "hsl(220, 20%, 8%)" }}>
+            <div className="flex-1 rounded-full px-4 py-2.5 text-sm text-foreground min-h-[40px] flex items-center" style={{ background: "hsl(220, 30%, 15%)" }}>
               {showRetypeInInput && retypeText ? (
-                <span className="italic" style={{ color: "hsl(280, 10%, 65%)" }}>
+                <span className="italic" style={{ color: "hsl(220, 10%, 75%)" }}>
                   {retypeText}
                   {phase === "retype" && <span className="inline-block w-[2px] h-4 ml-0.5 bg-primary animate-blink align-middle" />}
                 </span>
@@ -165,9 +167,9 @@ export const FakeChatScene = ({ onComplete }: FakeChatSceneProps) => {
             <button
               className="w-10 h-10 rounded-full flex items-center justify-center text-primary-foreground transition-all duration-300"
               style={{
-                background: phase === "cursor-hover" ? "hsl(330, 85%, 55%)" : "hsl(330, 85%, 45%)",
+                background: phase === "cursor-hover" ? "hsl(220, 85%, 55%)" : "hsl(220, 85%, 45%)",
                 transform: phase === "cursor-hover" ? "scale(1.15)" : "scale(1)",
-                boxShadow: phase === "cursor-hover" ? "0 0 20px hsl(330, 85%, 55%, 0.5)" : "none",
+                boxShadow: phase === "cursor-hover" ? "0 0 20px hsl(220, 85%, 55%, 0.5)" : "none",
               }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -194,13 +196,13 @@ export const FakeChatScene = ({ onComplete }: FakeChatSceneProps) => {
           </div>
         )}
 
-        {/* Emotional message */}
+        {/* Emotional message -> Roast message */}
         {(phase === "message" || phase === "fadeout") && (
           <div className="text-center mt-8 animate-slide-up-fade">
-            <p className="text-lg md:text-xl font-display text-foreground/90 italic mb-2" style={{ textShadow: "0 0 30px hsl(330, 85%, 60%, 0.3)" }}>
-              but you deserve something more special...
+            <p className="text-lg md:text-xl font-display text-foreground/90 italic mb-2" style={{ textShadow: "0 0 30px hsl(0, 85%, 60%, 0.3)" }}>
+              so we decided to publicly roast you instead...
             </p>
-            <p className="text-sm text-muted-foreground/60 animate-pulse">✨</p>
+            <p className="text-sm text-muted-foreground/60 animate-pulse">😂☕</p>
           </div>
         )}
       </div>
