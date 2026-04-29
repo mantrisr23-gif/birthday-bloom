@@ -1,13 +1,30 @@
 import { useState, useEffect, useRef } from "react";
 import { PHOTO_ASSETS } from "@/config/birthday";
-import photo1Default from "@/assets/photo-1.jpg";
-import photo2Default from "@/assets/photo-2.jpg";
-import photo3Default from "@/assets/photo-3.jpg";
+
+// Fallbacks are set to your generated funny images
+const photo1Default = "/funny1.jpg";
+const photo2Default = "/funny2.jpg";
+const photo3Default = "/funny3.jpg";
 
 const photos = [
-  { src: PHOTO_ASSETS.photo1 || photo1Default, fallback: photo1Default, caption: "Beautiful moments together 💖", key: "p1" },
-  { src: PHOTO_ASSETS.photo2 || photo2Default, fallback: photo2Default, caption: "Memories that last forever ✨", key: "p2" },
-  { src: PHOTO_ASSETS.photo3 || photo3Default, fallback: photo3Default, caption: "Smiles that light up the world 🌟", key: "p3" },
+  { 
+    src: PHOTO_ASSETS.photo1 || photo1Default, 
+    fallback: photo1Default, 
+    caption: "Evidence of another unauthorized tea break ☕", 
+    key: "p1" 
+  },
+  { 
+    src: PHOTO_ASSETS.photo2 || photo2Default, 
+    fallback: photo2Default, 
+    caption: "The exact moment work was 'pending' 📂", 
+    key: "p2" 
+  },
+  { 
+    src: PHOTO_ASSETS.photo3 || photo3Default, 
+    fallback: photo3Default, 
+    caption: "Rare sighting of Akash actually awake 😴", 
+    key: "p3" 
+  },
 ].filter(p => p.src !== null);
 
 export const PhotoGallery = () => {
@@ -41,17 +58,17 @@ export const PhotoGallery = () => {
         ref={sectionRef}
         className={`relative z-20 px-4 py-16 transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
       >
-        <h3 className="font-display text-3xl md:text-5xl font-bold text-center mb-12 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent animate-gradient-shift">
-          Precious Moments 📸
+        <h3 className="font-display text-3xl md:text-5xl font-bold text-center mb-12 bg-gradient-to-r from-blue-400 via-teal-300 to-blue-500 bg-clip-text text-transparent animate-gradient-shift">
+          The Junior Files 📸
         </h3>
 
         {/* Featured photo */}
         <div className="max-w-2xl mx-auto mb-8">
           <div
-            className="relative rounded-2xl overflow-hidden shadow-2xl border border-primary/20 cursor-pointer group"
+            className="relative rounded-2xl overflow-hidden shadow-2xl border border-blue-500/20 cursor-pointer group"
             onClick={() => setLightbox(activeIndex)}
             style={{
-              boxShadow: "0 0 60px hsl(var(--primary) / 0.2), 0 0 120px hsl(var(--secondary) / 0.1)",
+              boxShadow: "0 0 60px rgba(59, 130, 246, 0.2), 0 0 120px rgba(13, 148, 136, 0.1)",
             }}
           >
             {photos.map((photo, i) => (
@@ -76,7 +93,7 @@ export const PhotoGallery = () => {
                 />
                 <div
                   className="absolute inset-0 pointer-events-none"
-                  style={{ background: "linear-gradient(to top, hsl(var(--background) / 0.8) 0%, transparent 50%)" }}
+                  style={{ background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)" }}
                 />
                 <p className="absolute bottom-4 left-0 right-0 text-center font-display text-lg md:text-xl text-foreground/90 italic"
                   style={{ textShadow: "0 2px 10px rgba(0,0,0,0.8)" }}
@@ -85,10 +102,6 @@ export const PhotoGallery = () => {
                 </p>
               </div>
             ))}
-            {/* Hover glow */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
-              style={{ boxShadow: "inset 0 0 40px hsl(var(--primary) / 0.15)" }}
-            />
           </div>
         </div>
 
@@ -98,9 +111,7 @@ export const PhotoGallery = () => {
             <button
               key={i}
               onClick={() => setActiveIndex(i)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${i === activeIndex ? "bg-primary scale-130 shadow-[0_0_15px_hsl(var(--primary)/0.5)]" : "bg-muted"
-                }`}
-              style={{ transform: i === activeIndex ? "scale(1.3)" : "scale(1)" }}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${i === activeIndex ? "bg-blue-500 scale-130" : "bg-gray-600"}`}
             />
           ))}
         </div>
@@ -111,8 +122,7 @@ export const PhotoGallery = () => {
             <div
               key={i}
               onClick={() => setActiveIndex(i)}
-              className={`rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 border-2 group/thumb ${i === activeIndex ? "border-primary shadow-[0_0_20px_hsl(var(--primary)/0.3)]" : "border-transparent"
-                }`}
+              className={`rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 border-2 ${i === activeIndex ? "border-blue-500 shadow-lg" : "border-transparent"}`}
             >
               <img
                 src={photo.src}
@@ -120,7 +130,7 @@ export const PhotoGallery = () => {
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = photo.fallback;
                 }}
-                className="w-full h-24 md:h-32 object-cover transition-transform duration-500 group-hover/thumb:scale-110"
+                className="w-full h-24 md:h-32 object-cover"
                 loading="lazy"
               />
             </div>
@@ -131,7 +141,7 @@ export const PhotoGallery = () => {
       {/* Lightbox */}
       {lightbox !== null && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-background/90 backdrop-blur-xl animate-fade-in cursor-pointer"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-xl animate-fade-in cursor-pointer"
           onClick={() => setLightbox(null)}
         >
           <div className="relative max-w-4xl w-[90vw] animate-scale-in" onClick={(e) => e.stopPropagation()}>
@@ -142,29 +152,15 @@ export const PhotoGallery = () => {
                 (e.target as HTMLImageElement).src = photos[lightbox].fallback;
               }}
               className="w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl"
-              style={{ boxShadow: "0 0 80px hsl(var(--primary) / 0.3)" }}
             />
-            <p className="text-center mt-4 font-display text-xl text-foreground/90 italic">
+            <p className="text-center mt-4 font-display text-xl text-white italic">
               {photos[lightbox].caption}
             </p>
             <button
               onClick={() => setLightbox(null)}
-              className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-muted flex items-center justify-center text-foreground text-xl hover:bg-primary hover:text-primary-foreground transition-colors"
+              className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-white text-xl"
             >
               ✕
-            </button>
-            {/* Nav arrows */}
-            <button
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-muted/50 flex items-center justify-center text-foreground text-xl hover:bg-primary/50 transition-colors"
-              onClick={(e) => { e.stopPropagation(); setLightbox((lightbox - 1 + photos.length) % photos.length); }}
-            >
-              ‹
-            </button>
-            <button
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-muted/50 flex items-center justify-center text-foreground text-xl hover:bg-primary/50 transition-colors"
-              onClick={(e) => { e.stopPropagation(); setLightbox((lightbox + 1) % photos.length); }}
-            >
-              ›
             </button>
           </div>
         </div>
