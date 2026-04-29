@@ -9,8 +9,10 @@ interface Particle {
     emoji: string;
 }
 
-const EMOJIS = ['✨', '🎈', '🎉', '🎊', '💖', '🎂'];
-const COLORS = ['#FFD700', '#FF69B4', '#7FFFD4', '#FF4500', '#ADFF2F'];
+// SWAPPED: Romantic emojis replaced with "Junior Office Roast" emojis
+const EMOJIS = ['✨', '🎈', '🎉', '☕', '😴', '🏃‍♂️', '📂', '🤣'];
+// SWAPPED: Replaced pink/soft colors with more vibrant, professional colors
+const COLORS = ['#FFD700', '#3B82F6', '#7FFFD4', '#FF4500', '#ADFF2F', '#00BFFF'];
 
 export const CelebrationOverlay = () => {
     const [particles, setParticles] = useState<Particle[]>([]);
@@ -24,8 +26,9 @@ export const CelebrationOverlay = () => {
                 color: COLORS[Math.floor(Math.random() * COLORS.length)],
                 emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
             };
-            setParticles(prev => [...prev.slice(-15), newParticle]);
-        }, 1500);
+            // Keep a decent amount of particles floating for that "messy office" feel
+            setParticles(prev => [...prev.slice(-25), newParticle]);
+        }, 800); // Made it slightly faster so it feels more chaotic/funny
 
         return () => clearInterval(interval);
     }, []);
@@ -39,14 +42,14 @@ export const CelebrationOverlay = () => {
                         initial={{ y: "110%", x: p.x + "%", opacity: 0, scale: 0.5 }}
                         animate={{
                             y: "-10%",
-                            x: (p.x + (Math.random() * 20 - 10)) + "%",
+                            x: (p.x + (Math.random() * 30 - 15)) + "%", // Added more horizontal "swaying"
                             opacity: [0, 1, 1, 0],
-                            scale: [0.5, 1.2, 1, 0.8],
-                            rotate: [0, 180, 360]
+                            scale: [0.5, 1.3, 1, 0.7],
+                            rotate: [0, 180, 360, 720] // More rotation for extra chaos
                         }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 6, ease: "easeOut" }}
-                        className="absolute text-2xl drop-shadow-xl"
+                        transition={{ duration: 7, ease: "easeOut" }}
+                        className="absolute text-3xl drop-shadow-2xl"
                         style={{ color: p.color }}
                     >
                         {p.emoji}
